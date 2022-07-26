@@ -25,7 +25,7 @@ class CategoriesRepository implements ICategoriesRepository {
       (category) => category.name === name
     );
 
-    return findCategory;
+    return findCategory!;
   }
 }
 
