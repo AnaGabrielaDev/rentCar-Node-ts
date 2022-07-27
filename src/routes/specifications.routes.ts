@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { SpecificationsRepository } from '../modules/cars/repositories/SpecificationsRepository';
-import { CreateCategoryService } from '../modules/cars/services/CreateCategoryService';
+import { CreateCategoryService } from '../modules/cars/useCases/createCategory/CreateCategoryUseCase.ts';
 
 const specificationsRoutes = Router();
 
