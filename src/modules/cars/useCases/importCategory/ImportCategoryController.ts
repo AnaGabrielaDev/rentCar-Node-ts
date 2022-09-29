@@ -1,17 +1,18 @@
-import { Request, Response } from "express";
-import { ImportCategoryUseCase } from "./ImportCategoryUseCase";
+import { Request, Response } from 'express'
+import { ImportCategoryUseCase } from './ImportCategoryUseCase'
 
 class ImportCategoryController {
-    constructor(private importCategoryUseCase: ImportCategoryUseCase) {
+  constructor(private readonly importCategoryUseCase: ImportCategoryUseCase) {}
 
-    };
-    handle(request: Request, response: Response): Response {
-        const { file } = request;
+  async handle(request: Request, response: Response): Promise<Response> {
+    const { file } = request
 
-        this.importCategoryUseCase.execute(file);
+    if (!file) return response.status(400).json(new Error('file is required'))
 
-        return response.send();
-    };
+    await this.importCategoryUseCase.execute(file)
+
+    return response.send()
+  }
 }
 
-export { ImportCategoryController };
+export { ImportCategoryController }

@@ -1,25 +1,27 @@
 /* eslint-disable no-unused-vars */
-import { ICategoriesRepository } from "../../repositories/ICategoriesRepository";
+import { ICategoriesRepository } from '../../repositories/contracts/ICategoriesRepository'
 
 interface IRequest {
-  name: string;
-  description: string;
+  name: string
+  description: string
 }
 class CreateCategoryUseCase {
-  constructor(private categoriesRepository: ICategoriesRepository) { }
+  constructor(private readonly categoriesRepository: ICategoriesRepository) {}
 
-  execute({ name, description }: IRequest) {
-    const categoryAlreadyExists = this.categoriesRepository.findByName(name);
+  async execute({ name, description }: IRequest): Promise<void> {
+    const categoryAlreadyExists = await this.categoriesRepository.findByName(
+      name
+    )
 
     if (categoryAlreadyExists) {
-      throw new Error("Category Already Exists");
+      throw new Error('Category Already Exists')
     }
 
-    this.categoriesRepository.create({
+    await this.categoriesRepository.create({
       name,
       description,
-    });
+    })
   }
 }
 
-export { CreateCategoryUseCase };
+export { CreateCategoryUseCase }
