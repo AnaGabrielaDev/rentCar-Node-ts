@@ -11,16 +11,20 @@ const upload = multer({
   dest: './tmp',
 })
 
-categoriesRoutes.post('/', (req, res) => {
-  return createCategoryController().handle(req, res)
+categoriesRoutes.post('/', async (req, res) => {
+  await createCategoryController().handle(req, res)
 })
 
 categoriesRoutes.get('/', (req, res) => {
   return listCategoriesController.handle(req, res)
 })
 
-categoriesRoutes.post('/import', upload.single('file'), (request, response) => {
-  return importCategoryController.handle(request, response)
-})
+categoriesRoutes.post(
+  '/import',
+  upload.single('file'),
+  async (request, response) => {
+    return await importCategoryController.handle(request, response)
+  }
+)
 
 export { categoriesRoutes }
