@@ -4,17 +4,21 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "tsnd --inspect --transpile-only --ignore-watch node_modules --respawn src/server.ts",
-    "typeorm": "typeorm-ts-node-commonjs -d ./src/database/index.ts"
+    "dev": "tsnd --inspect --transpile-only --ignore-watch node_modules --respawn --exit-child src/server.ts",
+    "typeorm": "typeorm-ts-node-commonjs -d ./src/database/index.ts",
+    "up": "docker-compose up",
+    "start": "yarn prisma migrate deploy && node dist/server.js",
+    "build": "rimraf dist && tsc -p tsconfig.build.json"
   },
   "dependencies": {
-    "@prisma/client": "4.4.0",
+    "@prisma/client": "^4.9.0",
     "@types/multer": "^1.4.7",
     "csv-parse": "^5.3.0",
     "express": "^4.18.1",
     "multer": "^1.4.5-lts.1",
     "pg": "^8.8.0",
     "swagger-ui-express": "^4.5.0",
+    "tsyringe": "^4.7.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -30,7 +34,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.0.0",
     "prettier": "^2.7.1",
-    "prisma": "^4.4.0",
+    "prisma": "^4.9.0",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "*"
