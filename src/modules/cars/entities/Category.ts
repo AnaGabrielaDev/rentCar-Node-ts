@@ -11,13 +11,13 @@ class Category {
 
   description: string
 
-  created_at: Date
+  createdAt: Date
 
   constructor({ name, description }: ICreateCategory) {
     if (!this.id) this.id = uuid()
     this.name = name
     this.description = description
-    this.created_at = new Date()
+    this.createdAt = new Date()
   }
 }
 export { Category }

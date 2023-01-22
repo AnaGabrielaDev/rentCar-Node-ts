@@ -12,13 +12,13 @@ class Specification {
 
   description: string
 
-  created_at: Date
+  createdAt: Date
 
   constructor({ name, description }: ICreateSpecification) {
     if (!this.id) this.id = uuidV4()
     this.name = name
     this.description = description
-    this.created_at = new Date()
+    this.createdAt = new Date()
   }
 }
 
