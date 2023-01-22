@@ -1,4 +1,3 @@
-import { Category as PrismaCategory } from '@prisma/client'
 import { Category } from '../../../entities/Category'
 import {
   ICategoriesRepository,
@@ -7,13 +6,6 @@ import {
 import { connection } from './connection'
 
 export class PrismaCategoriesRepository implements ICategoriesRepository {
-  private mapCategory(category: PrismaCategory): Category {
-    return {
-      ...category,
-      created_at: category.createdAt,
-    }
-  }
-
   async create({ name, description }: ICreateCategoryDTO): Promise<void> {
     await connection.category.create({
       data: {
@@ -26,7 +18,12 @@ export class PrismaCategoriesRepository implements ICategoriesRepository {
   async list(): Promise<Category[]> {
     const categories = await connection.category.findMany()
 
-    return categories.map(this.mapCategory)
+    return categories.map((category) => ({
+      id: category.id,
+      name: category.name,
+      description: category.description,
+      createdAt: category.createdAt,
+    }))
   }
 
   async findByName(name: string): Promise<Category | null> {
@@ -38,6 +35,6 @@ export class PrismaCategoriesRepository implements ICategoriesRepository {
 
     if (!category) return null
 
-    return this.mapCategory(category)
+    return category
   }
 }
