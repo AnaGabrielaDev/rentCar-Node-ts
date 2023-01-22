@@ -6,12 +6,15 @@ class CreateSpecificationController {
     private readonly createSpecificationUseCase: CreateSpecificationUseCase
   ) {}
 
-  handle(req: Request, res: Response): Response {
-    const { name, description } = req.body
+  async handle(req: Request, res: Response): Promise<Response> {
+    try {
+      const { name, description } = req.body
+      await this.createSpecificationUseCase.execute({ name, description })
 
-    this.createSpecificationUseCase.execute({ name, description })
-
-    return res.status(201).send()
+      return res.status(201).send()
+    } catch (error: any) {
+      return res.status(404).send(error.message)
+    }
   }
 }
 
